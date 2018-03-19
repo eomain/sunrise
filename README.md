@@ -1,7 +1,11 @@
 # sunrise
-Sunrise: the Ruby project manager
+Sunrise: the Ruby project manager - ver 0.0.1
 
 **Summary:**
+A tool to manage Ruby projects.
+It is in early stages and thus lacks advance features. For now it only acts
+as a wrapper to common functionality.
+There currently are only minimal improvements over using standalone YARV.
 
 List of features:
 - `Auto generate project with version control`
