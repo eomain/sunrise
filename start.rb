@@ -22,7 +22,7 @@ module Option
             if opt == nil
                 pargs = ""
             end
-            cshell = Shell::Script.new("ruby", "rocket/main.rb", args=pargs)
+            cshell = Shell::Script.new("ruby", $proj.getName, args=pargs)
             puts "\tPreparing for take off => #{cshell.getVar}"
             cshell.execute
             puts "Powering down #{$proj.getName} engine...."

@@ -3,7 +3,7 @@ require "./shell"
 require "./start"
 
 BEGIN {
-    puts "Rocket: the Ruby project manager"
+    puts "Sunrise: the Ruby project manager"
 }
 
 COMMANDRUBY = ['-a', '-c', '-C', '-d', '-f', '-e', '-h', '-I', '-L', '-k',
