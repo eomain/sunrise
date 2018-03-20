@@ -59,7 +59,7 @@ module Option
     end
 
     def Option.projectExist(opt)
-        launchpath = "/" + opt +"/"+ Platform::ProjectLoader.getLaunchFile
+        launchpath = File.join(opt, Platform::ProjectLoader.getLaunchFile)
         unless !Config.exists launchpath or !Config.existsDir opt
             false
         else

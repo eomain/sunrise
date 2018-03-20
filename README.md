@@ -19,7 +19,7 @@ List of upcoming features:
 ## Run
 You can clone the repository using git or just manually download the zip file.
 
-**List of command**
+**List of commands**
 ```bash
 # launches(creates) a new project name rocket
 launch rocket
@@ -29,6 +29,13 @@ power
 
 # Display the version of the program
 version
+
+# other commands
+land
+log
+help
+doc
+upgrade
 ```
 **Download**
 
