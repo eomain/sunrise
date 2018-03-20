@@ -41,6 +41,7 @@ module Platform
     class ProjectLoader
         include Config
         LAUNCHFILE = "launch.json"
+        SOURCEDIR = "src/"
 
         def newProject(projdata)
             name = projdata[0]
@@ -62,10 +63,14 @@ module Platform
             end
 
             Config.createDir(name)
-            dir = name + "/"
-            Config.open LAUNCHFILE, dump
-            Config.open "main.rb"
-            @pfile = Config.read LAUNCHFILE
+            _launch = File.join(name, LAUNCHFILE)
+            _source = File.join(name, SOURCEDIR)
+            Config.open _launch, dump
+            Config.createDir _source
+            Config.open File.join(_source, "main.rb")
+            @pfile = Config.read _launch
+            puts "Project #{name} has been created!",
+            "Use command 'cd #{name}' to enter the project root"
             getProject @pfile
         end
 
@@ -80,7 +85,6 @@ module Platform
         end
 
         def load
-            pname = "rocket"
             path = LAUNCHFILE
             if Config.exists(path)
                 @pfile = Config.read path

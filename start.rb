@@ -1,10 +1,12 @@
 require "./shell"
+require "./setup"
 require "./io"
 
 
 module Option
     Projectload = Platform::ProjectLoader.new
     $proj = Projectload.load
+
     def Option.launch(opt)
         if projectExist opt
             puts "Creating new project '#{opt}'"
@@ -22,7 +24,7 @@ module Option
             if opt == nil
                 pargs = ""
             end
-            cshell = Shell::Script.new("ruby", $proj.getName, args=pargs)
+            cshell = Shell::Script.new("ruby", $proj.getMain, args=pargs)
             puts "\tPreparing for take off => #{cshell.getVar}"
             cshell.execute
             puts "Powering down #{$proj.getName} engine...."
@@ -58,7 +60,7 @@ module Option
 
     def Option.projectExist(opt)
         launchpath = "/" + opt +"/"+ Platform::ProjectLoader.getLaunchFile
-        unless $proj == nil and !Config.exists launchpath and !Config.existsDir opt
+        unless !Config.exists launchpath or !Config.existsDir opt
             false
         else
             true

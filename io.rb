@@ -2,16 +2,20 @@ module Config
     $LAUNCHFILE = "launch.json"
 
     def Config.open(path, content="")
-        launchfile = File.open(path) if File::exists?($LAUNCHFILE)
-        unless launchfile
-            puts "Error: file '#{$LAUNCHFILE}' not found in directory #{Dir::pwd}"
-            launchfile = File.open(path, "w+")
+        begin
+            launchfile = File.open(path) if File::exists?(path)
+            unless launchfile
+                puts "Error: file '#{$LAUNCHFILE}' not found in directory #{Dir::pwd}"
+                launchfile = File.open(path, "w+")
+            end
+            if !content.eql?("")
+                json =  JSON.pretty_generate(content)
+                File.write(path, json)
+            end
+            launchfile
+        rescue Exception => e
+            print "Error: #{e.message}"
         end
-        if !content.eql?("")
-            json =  JSON.pretty_generate(content)
-            File.write(path, json)
-        end
-        launchfile
     end
 
     def Config.read(filename)

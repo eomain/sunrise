@@ -60,14 +60,6 @@ when "power"
     when "-i"
         Option.power_i
     when nil
-        if COMMANDRUBY.each do |i|
-            if EXTRA == i
-                true
-            else
-                false
-            end
-        end
-    end
         Option.power OPTIONS
     else
         help
