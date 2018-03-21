@@ -1,6 +1,7 @@
-module IO
 
-    def IO.open(path, content="")
+module FileIO
+
+    def FileIO.open(path, content="")
         begin
             launchfile = File.open(path) if File::exists?(path)
             unless launchfile
@@ -16,7 +17,7 @@ module IO
         end
     end
 
-    def IO.read(filename)
+    def FileIO.read(filename)
         begin
             content = File.read(filename)
         rescue Exception => e
@@ -26,7 +27,7 @@ module IO
         return content
     end
 
-    def IO.exists(filename)
+    def FileIO.exists(filename)
         if File::exists?(filename)
             true
         else
@@ -34,7 +35,7 @@ module IO
         end
     end
 
-    def IO.createDir(dirname)
+    def FileIO.createDir(dirname)
         begin
             Dir::mkdir(dirname)
         rescue Exception => e
@@ -42,7 +43,7 @@ module IO
         end
     end
 
-    def IO.existsDir(dirname)
+    def FileIO.existsDir(dirname)
         if Dir.exists?(dirname)
             true
         else

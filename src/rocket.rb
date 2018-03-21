@@ -1,5 +1,5 @@
 $LOAD_PATH << '.'
-require "./start"
+require "start"
 
 BEGIN {
     puts "Sunrise: the Ruby project manager"

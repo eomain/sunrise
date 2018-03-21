@@ -2,7 +2,7 @@
 module Shell
     class Script
 
-        def initialize(command, var, args="", flag="")
+        def initialize(command, var="", args="", flag="")
             setCommand command
             @flag = ""
             @args = ""
@@ -12,7 +12,7 @@ module Shell
             @dir = Dir.pwd
         end
 
-        def reset(command, var, args="", flag="")
+        def reset(command, var="", args="", flag="")
             setCommand command
             setVar var
             addFlag flag

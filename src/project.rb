@@ -55,7 +55,7 @@ module Platform
     end
 
     class ProjectLoader
-        include IO
+        include FileIO
         LAUNCHFILE = "launch.json"
         SOURCEDIR = "src/"
 
@@ -81,10 +81,10 @@ module Platform
             Config.createDir(name)
             _launch = File.join(name, LAUNCHFILE)
             _source = File.join(name, SOURCEDIR)
-            IO.open _launch, dump
-            IO.createDir _source
-            IO.open File.join(_source, "main.rb")
-            @pfile = IO.read _launch
+            FileIO.open _launch, dump
+            FileIO.createDir _source
+            FileIO.open File.join(_source, "main.rb")
+            @pfile = FileIO.read _launch
             puts "Project #{name} has been created!",
             "Use command 'cd #{name}' to enter the project root"
             getProject @pfile
@@ -102,8 +102,8 @@ module Platform
 
         def load
             path = LAUNCHFILE
-            if IO.exists(path)
-                @pfile = IO.read path
+            if FileIO.exists(path)
+                @pfile = FileIO.read path
                 getProject @pfile
             else
                 return nil
