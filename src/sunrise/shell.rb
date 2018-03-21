@@ -1,6 +1,8 @@
 
 module Shell
     class Script
+        @header = "\t=>"
+        @footer = "<="
 
         def initialize(command, var="", args="", flag="")
             setCommand command
@@ -19,6 +21,14 @@ module Shell
             addArg args
         end
 
+        def set_header(header)
+            @header = "\t=> " + header
+        end
+
+        def set_footer
+            @footer = "<=" + footer
+        end
+
         def setCommand(command)
             @command = " " + command + " "
         end
@@ -28,8 +38,8 @@ module Shell
         end
 
         def addFlag(flag, opt="")
-            if !flag.eql?("")
-                if !opt.eql?("")
+            if !flag.empty?
+                if !opt.empty?
                     opt += " "
                 end
                 @flag += " -" + flag + " " + opt
@@ -57,14 +67,14 @@ module Shell
         end
 
         def execute
-            puts
+            puts @header
             command = @command + @flag + @var + @args
             begin
                 system(command)
             rescue Exception => e
                 raise "Error: #{e.message}"
             end
-            puts
+            puts @footer
         end
 
     end

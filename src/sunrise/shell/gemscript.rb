@@ -1,4 +1,4 @@
-require "./shell"
+require "sunrise/shell"
 
 module Setup
     $gemshell = Shell::Script.new("gem", "install")

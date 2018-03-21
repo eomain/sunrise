@@ -1,8 +1,16 @@
-require "fileio"
+require "sunrise/shell/gitscript"
+require "sunrise/fileio"
 require "json"
 
 module Platform
     class Project
+
+        @email = ""
+        @repository = ""
+        @homepage = ""
+        @license = ""
+        @dependencies = {}
+        @log
 
         attr_reader :container
 
@@ -13,6 +21,7 @@ module Platform
             @pdescription = description
             @pauthor = author
             @pdate = date
+            @git = GitControl.new
 
             setContainer
 
@@ -27,6 +36,19 @@ module Platform
                 "author" => @pauthor,
                 "date" => @pdate,
             }
+        end
+
+        def upgrade
+            @git.upgrade
+        end
+
+        def push
+            @git.push_remote
+        end
+
+        def update_project
+            dump = JSON.parse(self.container)
+            FileIO.open "", dump
         end
 
         def getName
@@ -70,25 +92,25 @@ module Platform
 
             index = 0
             dump.each_key do |i|
-                if dump[i].eql?("") and
-                        !projdata[index].eql?("") and
-                        !projdata[index] == nil
+                if !projdata[index].empty? and
+                        projdata[index] != nil
                     dump[i] = projdata[index]
                 end
                 index += 1
             end
 
-            Config.createDir(name)
+            FileIO.createDir(name)
             _launch = File.join(name, LAUNCHFILE)
             _source = File.join(name, SOURCEDIR)
             FileIO.open _launch, dump
             FileIO.createDir _source
-            FileIO.open File.join(_source, "main.rb")
+            FileIO.open File.join(_source, dump["main"])
             @pfile = FileIO.read _launch
             puts "Project #{name} has been created!",
             "Use command 'cd #{name}' to enter the project root"
             getProject @pfile
         end
+
 
         def getProject(json)
             conf = JSON.parse(json)

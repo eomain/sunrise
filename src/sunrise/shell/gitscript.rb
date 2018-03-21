@@ -1,14 +1,12 @@
-require "shell"
-require "fileio"
+require "sunrise/shell"
+require "sunrise/fileio"
 
-module Setup
-
-    class GitConfig
+    class GitControl
         @currbranch
 
         def initialize(branchname="")
             @gitshell = GitShell.new
-            unless branchname.eql?("")
+            unless branchname.empty?
                 @gitshell.set_branch branchname
                 @gitshell.git_checkout branchname
                 @currbranch = branchname
@@ -21,7 +19,7 @@ module Setup
 
         def push_remote(location="")
             @gitshell.upgrade
-            unless location.eql?("")
+            unless location.empty?
                 @gitshell.set_location location
             end
             @gitshell.git_remote
@@ -54,7 +52,7 @@ module Setup
         def git_commit_all
             run("add", ".")
             run("commit")
-            puts "Successfully commit to #{$branch}"
+            puts "Successfully committed to #{$branch}"
         end
 
         def run(var, args="", flag="")
@@ -84,5 +82,3 @@ module Setup
         end
 
     end
-
-end

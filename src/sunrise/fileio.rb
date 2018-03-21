@@ -7,7 +7,7 @@ module FileIO
             unless launchfile
                 launchfile = File.open(path, "w+")
             end
-            if !content.eql?("")
+            if !content.empty?
                 json =  JSON.pretty_generate(content)
                 File.write(path, json)
             end

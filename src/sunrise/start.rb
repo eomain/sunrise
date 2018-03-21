@@ -1,7 +1,7 @@
-require "project"
-require "shell"
-require "fileio"
-require "userprompt"
+require "sunrise/project"
+require "sunrise/shell"
+require "sunrise/fileio"
+require "sunrise/userprompt"
 
 
 module Option
@@ -71,7 +71,7 @@ module Option
 
     def Option.projectExist(opt)
         launchpath = File.join(opt, Platform::ProjectLoader.getLaunchFile)
-        unless !Config.exists launchpath or !Config.existsDir opt
+        unless !FileIO.exists launchpath or !FileIO.existsDir opt
             false
         else
             true

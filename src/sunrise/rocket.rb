@@ -1,5 +1,5 @@
 $LOAD_PATH << '.'
-require "start"
+require "sunrise/start"
 
 BEGIN {
     puts "Sunrise: the Ruby project manager"
@@ -10,11 +10,13 @@ COMMANDRUBY = [ '-a', '-c', '-C', '-d', '-f', '-e', '-h', '-I', '-L', '-k',
                 '--debug', '--help', '--version', '--verbose', '--yydebug' ]
 
 VERSION = "0.0.1"
-COMMANDLIST = ["launch", "land", "log", "power", "help" "doc", "upgrade, version"]
+COMMANDLIST = ["launch", "land", "log", "test", "pack", "power", "help" "doc", "upgrade, version"]
 COMMANDDESC = {"launch" => "Launch a new project",
                 "land" => "Build the current project",
                 "log" => "Display log file of the current project",
                 "help" => "Display this message",
+                "test" => "Create tests for the project",
+                "pack" => "Packs up the project in a zipped format",
                 "power" => "Powerup an existing project",
                 "doc" => "Generate docs for existing project",
                 "upgrade" => "Commit all changes to git repository",
