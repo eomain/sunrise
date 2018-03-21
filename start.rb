@@ -1,19 +1,21 @@
-require "./shell"
-require "./setup"
-require "./io"
+require "project"
+require "shell"
+require "fileio"
+require "userprompt"
 
 
 module Option
     Projectload = Platform::ProjectLoader.new
+    PFile = Platform::ProjectLoader.getLaunchFile
     $proj = Projectload.load
 
     def Option.launch(opt)
         if projectExist opt
             puts "Creating new project '#{opt}'"
-            projinfo = getProjectInfo(opt)
+            projinfo = projectPrompt(opt)
             $proj = Projectload.newProject projinfo
         else
-            puts "Error: cannot launch in an already existing directory"
+            raise "Error: cannot launch in an already existing directory"
         end
     end
 
@@ -29,17 +31,26 @@ module Option
             cshell.execute
             puts "Powering down #{$proj.getName} engine...."
         rescue Exception => e
-            puts "Error: cannot powerup a project without '#{Platform::ProjectLoader.getLaunchFile}'"
+            puts "Error: cannot powerup a project without '#{PFile}'"
         end
     end
 
     def Option.power_v
-        puts "#{$proj.getName} #{$proj.getVersion}"
+        begin
+            puts "#{$proj.getName} #{$proj.getVersion}"
+        rescue
+            puts "Error: cannot powerup a project without '#{PFile}'"
+        end
+
     end
 
     def Option.power_i
-        puts "About #{$proj.getName}:"
-        puts "#{$proj.getAbout}"
+        begin
+            puts "About #{$proj.getName}:"
+            puts "#{$proj.getAbout}"
+        rescue
+            puts "Error: cannot powerup a project without '#{PFile}'"
+        end
     end
 
     def Option.land
@@ -66,32 +77,4 @@ module Option
             true
         end
     end
-end
-
-def getProjectInfo(name)
-    begin
-
-    print "Enter the software version(default is '0.0.1') : "
-    version = STDIN.gets.chomp
-
-    print "Enter main project filename(default is main.rb) : "
-    main = STDIN.gets.chomp
-
-    puts "Enter your project description: "
-    description = STDIN.gets.chomp
-
-    print "Enter the name of the author: "
-    author = STDIN.gets.chomp
-
-    time = Time.new
-    date = time.strftime("%d-%m-%Y %H:%M:%S")
-    puts date
-
-    puts "These settings can be modified later in the file 'launch.json'"
-
-    rescue Exception => e
-        puts e.message
-    end
-
-    return name, version, main, description, author, date
 end
